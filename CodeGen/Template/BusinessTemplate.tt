@@ -1,0 +1,179 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using ProjectLibrary.Base;
+using ProjectLibrary.DB;
+using System.Data;
+using System.Dynamic;
+using System.Text;
+
+namespace TeachAnnouncement.Business
+{
+    public class Bus<#=TableName#> : BusinessBase
+    {
+        #region 建構子
+        public Bus<#=TableName#>(DBManager _dbManager) : base(_dbManager)
+        {
+
+        }
+        #endregion
+
+        #region 方法
+        /// <summary>
+        /// 取得<#=TableName#>
+        /// </summary>
+        /// <returns></returns>
+        public DataTable Get<#=TableName#>()
+        {
+            StringBuilder sql = new StringBuilder();
+
+            sql.Append("SELECT M.* ");
+            sql.Append("FROM <#=TableName#> M ");
+            sql.Append("WHERE 1=1 ");
+
+            StringBuilder sbWhere = new StringBuilder();
+            dynamic param = new ExpandoObject();
+
+            // 動態組合 SQL 條件
+<#
+    string KeyColumn = "";
+    foreach (ColumnModel columnModel in Columns)
+    {
+        if (string.IsNullOrEmpty(columnModel.CONSTRAINT_NAME) == false)
+        {
+            if (KeyColumn!=""){
+			    KeyColumn += ",";
+		    }
+		    KeyColumn += columnModel.COLUMN_NAME;
+            #>
+            GenWhere(sbWhere, param, "<#=columnModel.COLUMN_NAME#>", "=", <#=columnModel.COLUMN_NAME#>);
+            <#
+        }
+    }
+#>
+
+            sql.Append(sbWhere);
+            sql.Append("ORDER BY <#=KeyColumn#>");
+
+            // 執行查詢
+            DataTable dt = dbManager.GetData(sql.ToString(), param, PageNo, PageSize, ref TotalRowCount);
+            ResetColumn();
+            return dt;
+        }
+
+        /// <summary>
+        /// 新增<#=TableName#>
+        /// </summary>
+        /// <returns></returns>
+        public int Insert<#=TableName#>()
+        {
+            StringBuilder sbColumn = new StringBuilder();
+            StringBuilder sbValue = new StringBuilder();
+            dynamic param = new ExpandoObject();
+
+            // 動態組合 SQL 欄位
+<#
+    foreach (ColumnModel columnModel in Columns)
+    {
+            #>
+            GenInsert(sbColumn, sbValue, param, "<#=columnModel.COLUMN_NAME#>", <#=columnModel.COLUMN_NAME#>);
+            <#
+    }
+#>
+
+            // 執行新增
+            int cnt = dbManager.Insert("<#=TableName#>", sbColumn.ToString(), sbValue.ToString(), param);
+            ResetColumn();
+            return cnt;
+        }
+
+        /// <summary>
+        /// 修改<#=TableName#>
+        /// </summary>
+        /// <returns></returns>
+        public int Update<#=TableName#>()
+        {
+            StringBuilder sbColumn = new StringBuilder();
+            StringBuilder sbWhere = new StringBuilder();
+            dynamic param = new ExpandoObject();
+
+            // 動態組合 SQL 欄位
+<#
+    foreach (ColumnModel columnModel in Columns)
+    {
+        if (string.IsNullOrEmpty(columnModel.CONSTRAINT_NAME) == true)
+        {
+            #>
+            GenUpdate(sbColumn, param, "<#=columnModel.COLUMN_NAME#>", <#=columnModel.COLUMN_NAME#>);
+            <#
+        }
+    }
+#>
+
+            // 動態組合 SQL 條件
+<#
+    foreach (ColumnModel columnModel in Columns)
+    {
+        if (string.IsNullOrEmpty(columnModel.CONSTRAINT_NAME) == false)
+        {
+            #>
+            GenWhere(sbWhere, param, "<#=columnModel.COLUMN_NAME#>", "=", <#=columnModel.COLUMN_NAME#>);
+            <#
+        }
+    }
+#>
+
+            // 執行修改
+            int cnt = dbManager.Update("<#=TableName#>", sbColumn.ToString(), sbWhere.ToString(), param);
+            ResetColumn();
+            return cnt;
+        }
+
+        /// <summary>
+        /// 刪除<#=TableName#>
+        /// </summary>
+        /// <returns></returns>
+        public int Delete<#=TableName#>()
+        {
+            StringBuilder sbWhere = new StringBuilder();
+            dynamic param = new ExpandoObject();
+
+            // 動態組合 SQL 條件
+<#
+    foreach (ColumnModel columnModel in Columns)
+    {
+        if (string.IsNullOrEmpty(columnModel.CONSTRAINT_NAME) == false)
+        {
+            #>
+            GenWhere(sbWhere, param, "<#=columnModel.COLUMN_NAME#>", "=", <#=columnModel.COLUMN_NAME#>);
+            <#
+        }
+    }
+#>
+
+            // 執行修改
+            int cnt = dbManager.Delete("<#=TableName#>", sbWhere.ToString(), param);
+            ResetColumn();
+            return cnt;
+        }
+        #endregion
+
+        #region 欄位
+<#
+    foreach (ColumnModel columnModel in Columns)
+    {
+        #>
+        public object <#=columnModel.COLUMN_NAME#>
+        {
+            get { return htColumn["<#=columnModel.COLUMN_NAME#>"]; }
+            set { htColumn["<#=columnModel.COLUMN_NAME#>"] = value; }
+        }
+
+        <#
+    }
+#>
+        #endregion
+    }
+}
