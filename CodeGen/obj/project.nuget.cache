@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jvPmJE9gOb0awf/vjmq+ltPZNJ8v3iF2qFRhJNryRMPKY6tiF5VF71O5rkufrAD6fHWx6hLs37j5hElENpoJqA==",
+  "dgSpecHash": "TNxMuQXhEN+Pv893N72aU9kOZEITxwuGOxa4TAUpPlXjUt1BgUCQ0G5ftPJ3rmBqGb8xeE6Z4NbDllVvsezMvA==",
   "success": true,
-  "projectFilePath": "D:\\Project\\Teach\\TeachAnnouncement\\CodeGen\\CodeGen.csproj",
+  "projectFilePath": "C:\\Users\\eerma\\Documents\\GitHub\\windows-form-code-gen\\CodeGen\\CodeGen.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eerma\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\eerma\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

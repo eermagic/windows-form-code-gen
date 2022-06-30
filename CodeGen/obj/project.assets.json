@@ -459,11 +459,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\Teach\\TeachAnnouncement\\CodeGen\\CodeGen.csproj",
+      "projectUniqueName": "C:\\Users\\eerma\\Documents\\GitHub\\windows-form-code-gen\\CodeGen\\CodeGen.csproj",
       "projectName": "CodeGen",
-      "projectPath": "D:\\Project\\Teach\\TeachAnnouncement\\CodeGen\\CodeGen.csproj",
+      "projectPath": "C:\\Users\\eerma\\Documents\\GitHub\\windows-form-code-gen\\CodeGen\\CodeGen.csproj",
       "packagesPath": "C:\\Users\\eerma\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\Teach\\TeachAnnouncement\\CodeGen\\obj\\",
+      "outputPath": "C:\\Users\\eerma\\Documents\\GitHub\\windows-form-code-gen\\CodeGen\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\eerma\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -515,7 +515,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
